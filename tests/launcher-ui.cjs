@@ -55,6 +55,16 @@ app.whenReady().then(async () => {
     await query('cHrOmE');
     assert.equal(await js('document.querySelectorAll(".app-cell").length'), 1);
     assert.equal(await js('document.querySelector(".app-name").textContent'), 'Google Chrome');
+    const readsBeforeSmartSearch = requests;
+    await query('vsc');
+    assert.equal(await js('document.querySelector(".app-name").textContent'), 'Visual Studio Code');
+    await query('gchr');
+    assert.equal(await js('document.querySelector(".app-name").textContent'), 'Google Chrome');
+    await query('  ＶＳＣ  ');
+    assert.equal(await js('document.querySelector(".app-name").textContent'), 'Visual Studio Code');
+    await query('wt');
+    assert.equal(await js('document.querySelector(".app-name").textContent'), 'Windows Terminal');
+    assert.equal(requests, readsBeforeSmartSearch, 'smart searching does not rescan apps');
     await query('微信');
     assert.equal(await js('document.querySelector(".app-name").textContent'), '微信');
     await screenshot('launcher-search-preview.png');

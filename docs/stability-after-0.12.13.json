@@ -1,0 +1,75 @@
+{
+  "date": "2026-10-20T12:50:07.943Z",
+  "appVersion": "0.12.13",
+  "platform": "darwin",
+  "arch": "arm64",
+  "electron": "44.8.0",
+  "simulatedApps": 1000,
+  "measuredCycles": 40,
+  "durationMs": 1734,
+  "rendererHeapBeforeBytes": 1773780,
+  "rendererHeapAfterBytes": 1808228,
+  "rendererHeapGrowthBytes": 34448,
+  "nativeIconReads": 47,
+  "processMemoryBefore": [
+    {
+      "type": "Browser",
+      "memory": {
+        "workingSetSize": 164288,
+        "peakWorkingSetSize": 164288
+      }
+    },
+    {
+      "type": "GPU",
+      "memory": {
+        "workingSetSize": 124688,
+        "peakWorkingSetSize": 126336
+      }
+    },
+    {
+      "type": "Utility",
+      "memory": {
+        "workingSetSize": 48448,
+        "peakWorkingSetSize": 48448
+      }
+    },
+    {
+      "type": "Tab",
+      "memory": {
+        "workingSetSize": 180912,
+        "peakWorkingSetSize": 257216
+      }
+    }
+  ],
+  "processMemoryAfter": [
+    {
+      "type": "Browser",
+      "memory": {
+        "workingSetSize": 150592,
+        "peakWorkingSetSize": 164496
+      }
+    },
+    {
+      "type": "GPU",
+      "memory": {
+        "workingSetSize": 100864,
+        "peakWorkingSetSize": 128304
+      }
+    },
+    {
+      "type": "Utility",
+      "memory": {
+        "workingSetSize": 41808,
+        "peakWorkingSetSize": 48448
+      }
+    },
+    {
+      "type": "Tab",
+      "memory": {
+        "workingSetSize": 166080,
+        "peakWorkingSetSize": 257216
+      }
+    }
+  ],
+  "limitations": "Synthetic short-run test on the reported host. Working sets include shared memory; these are not Windows idle-memory or long-run leak measurements."
+}

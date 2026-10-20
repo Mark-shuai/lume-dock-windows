@@ -13,8 +13,9 @@ ipcMain.handle('scan-desktop', () => ({ items: [] }));
 const png = `data:image/png;base64,${fs.readFileSync(path.join(__dirname, '../renderer/assets/macos/generic.png')).toString('base64')}`;
 let holdIcons = false;
 const pendingIcons = [];
-ipcMain.handle('get-icon', (_event, target) => holdIcons && target.endsWith('/999.exe') ?
-  new Promise(resolve => pendingIcons.push(resolve)) : null);
+const iconRequests = [];
+ipcMain.handle('get-icon', (_event, target) => { iconRequests.push({ target, holdIcons }); return holdIcons && target.endsWith('/999.exe') ?
+  new Promise(resolve => pendingIcons.push(resolve)) : null; });
 app.whenReady().then(async () => {
   const win = BrowserWindow.getAllWindows()[0];
   const js = source => win.webContents.executeJavaScript(source);
@@ -63,19 +64,36 @@ app.whenReady().then(async () => {
       for (let i = 0; i < 80 && !pendingIcons.length; i++) await new Promise(resolve => setTimeout(resolve, 25));
       assert.ok(pendingIcons.length, 'icon request started before closing');
       await js(`(async () => { launcher.close(); await launcher.open(); appSearch.value = 'App 999'; appSearch.dispatchEvent(new Event('input')); })()`);
+      // Repaint while the new request is pending, then deliver intersection
+      // after the request has populated the cache. This is a real frame race.
+      for (let i = 0; i < 80 && pendingIcons.length < 2; i++) await new Promise(resolve => setTimeout(resolve, 25));
+      assert.equal(pendingIcons.length, 2, 'each launcher session starts its own icon request');
+      await js(`(() => {
+        window.deferredIconObservations = [];
+        window.originalIconObserve = IntersectionObserver.prototype.observe;
+        IntersectionObserver.prototype.observe = function(node) { deferredIconObservations.push([this, node]); };
+        appSearch.dispatchEvent(new Event('input'));
+      })()`);
+      pendingIcons.splice(0).forEach(resolve => resolve(png));
+      await js(`new Promise(resolve => setTimeout(resolve, 50))`);
+      await js(`(() => {
+        IntersectionObserver.prototype.observe = originalIconObserve;
+        for (const [observer, node] of deferredIconObservations) observer.observe(node);
+        delete window.deferredIconObservations; delete window.originalIconObserve;
+      })()`);
       let loaded = false;
       for (let i = 0; i < 80 && !loaded; i++) {
         pendingIcons.splice(0).forEach(resolve => resolve(png));
         await new Promise(resolve => setTimeout(resolve, 25));
-        loaded = await js(`document.querySelector('.app-art')?.classList.contains('has-icon')`);
+        loaded = await js(`(() => { const image = document.querySelector('.app-art img'); return image?.getAttribute('src') === ${JSON.stringify(png)} && image.complete && image.naturalWidth > 0; })()`);
       }
-      assert.ok(loaded, `reopened panel receives its icon despite an older in-flight request: ${JSON.stringify({pending:pendingIcons.length, dom:await js(`({hidden:launcher.isOpen(), names:[...document.querySelectorAll('.app-name')].map(node=>node.textContent), art:document.querySelector('.app-art')?.outerHTML})`)})}`);
+      assert.ok(loaded, `reopened panel receives its icon despite an older in-flight request: ${JSON.stringify({pending:pendingIcons.length, requests:iconRequests.slice(-20), bounds:win.getBounds(), dom:await js(`({open:launcher.isOpen(), visibility:document.visibilityState, grid:document.querySelector('#appGrid').getBoundingClientRect().toJSON(), cell:document.querySelector('.app-cell')?.getBoundingClientRect().toJSON(), names:[...document.querySelectorAll('.app-name')].map(node=>node.textContent), image:document.querySelector('.app-art img')?.getAttribute('src')?.slice(0,60)})`)})}`);
       holdIcons = false;
       await js('launcher.close()');
     }
     const report = { date: new Date().toISOString(), version: require('../package.json').version, platform: process.platform, arch: process.arch,
       apps: 1000, searches: 80, ...result, limitations: 'Synthetic macOS/Electron workload; elapsed time is host-dependent, not a Windows working-set measurement.' };
-    fs.writeFileSync(path.join(__dirname, '../docs', baseline ? 'performance-before-0.12.12.json' : 'performance-after-0.12.12.json'), JSON.stringify(report, null, 2));
+    fs.writeFileSync(path.join(__dirname, '../docs', `performance-${baseline ? 'before' : 'after'}-${report.version}.json`), JSON.stringify(report, null, 2));
     console.log(JSON.stringify(report));
     app.exit(0);
   } catch (error) { console.error(error); app.exit(1); }

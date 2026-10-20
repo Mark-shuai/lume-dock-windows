@@ -38,6 +38,13 @@ window.createLauncher = function createLauncher({ getPinned, getLibrary = () => 
       const item = filtered[index];
       const fileTarget = item && (item.target.startsWith('apps-folder:') || /^(?:[a-z]:[\\/]|\\\\|\/)/i.test(item.target) || !/^[a-z][a-z\d+.-]*:/i.test(item.target));
       const key = item && keyForTarget(item.target);
+      // An in-flight read may finish between repaint and this notification.
+      // Hydrate the replacement node from cache instead of leaving its fallback.
+      if (key && iconCache.has(key)) {
+        const icon = iconCache.get(key);
+        if (icon && !window.dockIcons.preferred(item)) setIcon(entry.target, icon);
+        continue;
+      }
       if (key && iconPending.has(key)) {
         iconPending.get(key).then(icon => {
           if (icon && entry.target.isConnected && !window.customIconStore?.get(item)) setIcon(entry.target, icon);
@@ -133,8 +140,7 @@ window.createLauncher = function createLauncher({ getPinned, getLibrary = () => 
     const counts = { apps: 0, shortcuts: 0 };
     for (const item of merged) {
       counts[item.kind]++;
-      item.searchText = item.searchNames.join(' ').normalize('NFKC').toLocaleLowerCase();
-      item.nameKey = item.name.normalize('NFKC').toLocaleLowerCase();
+      item.searchIndex = window.launcherSearch.indexNames(item.searchNames);
     }
     const recentKeys = recent.map(item => keyForTarget(item.target));
     return entryIndex = { catalog, identities, pinned, library: [...library], recent: [...recent], entries: merged, counts,
@@ -194,8 +200,7 @@ window.createLauncher = function createLauncher({ getPinned, getLibrary = () => 
     queuedIconKeys.clear();
     if (panel.hidden) return;
     if (!preserveScroll) grid.scrollTop = 0;
-    const query = search.value.normalize('NFKC').toLocaleLowerCase().trim();
-    const tokens = query.split(/\s+/).filter(Boolean);
+    const query = window.launcherSearch.prepareQuery(search.value);
     const { entries, counts, pinnedTargets: pinned, recentTargets, recentOrder } = getEntryIndex();
     const label = kind === 'apps' ? '应用' : '快捷方式';
     panel.querySelectorAll('[data-kind]').forEach(button => {
@@ -209,11 +214,16 @@ window.createLauncher = function createLauncher({ getPinned, getLibrary = () => 
     grid.setAttribute('aria-label', `${label}列表`);
     panel.querySelector('.launcher-filters').setAttribute('aria-label', `筛选${label}`);
     const inFilter = item => (filter !== 'pinned' || matches(item, pinned)) && (filter !== 'recent' || matches(item, recentTargets));
-    const inSearch = item => tokens.every(token => item.searchText.includes(token));
+    const scores = new Map();
+    const inSearch = item => {
+      const score = window.launcherSearch.score(item.searchIndex, query);
+      scores.set(item, score);
+      return score >= 0;
+    };
     filtered = entries.filter((item) => {
       return item.kind === kind && inFilter(item) && inSearch(item);
     });
-    if (query) filtered.sort((a, b) => Number(b.nameKey.startsWith(query)) - Number(a.nameKey.startsWith(query)));
+    if (query.text) filtered.sort((a, b) => scores.get(b) - scores.get(a));
     else if (filter === 'recent') {
       const order = item => Math.min(...item.aliases.map(target => recentOrder.get(target) ?? Infinity));
       filtered.sort((a, b) => order(a) - order(b));
@@ -228,13 +238,13 @@ window.createLauncher = function createLauncher({ getPinned, getLibrary = () => 
       if (!filtered.length && !loading) {
         grid.hidden = true;
         empty.hidden = false;
-        document.querySelector('#launcherEmptyTitle').textContent = query ? `没有找到匹配的${label}` : filter === 'pinned' ? `还没有固定的${label}` : filter === 'recent' ? `还没有最近使用的${label}` : `暂时没有可显示的${label}`;
+        document.querySelector('#launcherEmptyTitle').textContent = query.text ? `没有找到匹配的${label}` : filter === 'pinned' ? `还没有固定的${label}` : filter === 'recent' ? `还没有最近使用的${label}` : `暂时没有可显示的${label}`;
         const otherCount = entries.filter(item => item.kind !== kind && inFilter(item) && inSearch(item)).length;
         const otherLabel = kind === 'apps' ? '快捷方式' : '应用';
-        document.querySelector('#launcherEmptyCopy').textContent = query && otherCount ? `“${otherLabel}”中有 ${otherCount} 个匹配结果，点击上方分类查看。` : query ? '换一个名称试试，或点击“手动添加”选择入口。' : filter !== 'all' ? `切换“全部”查看此分类，点击 ☆ 可固定到程序坞。` : kind === 'apps' ? '刷新列表重新识别程序，或手动添加 EXE。' : '网址、文件、文件夹和未识别的快捷方式收纳在这里。';
+        document.querySelector('#launcherEmptyCopy').textContent = query.text && otherCount ? `“${otherLabel}”中有 ${otherCount} 个匹配结果，点击上方分类查看。` : query.text ? '换一个名称试试，或点击“手动添加”选择入口。' : filter !== 'all' ? `切换“全部”查看此分类，点击 ☆ 可固定到程序坞。` : kind === 'apps' ? '刷新列表重新识别程序，或手动添加 EXE。' : '网址、文件、文件夹和未识别的快捷方式收纳在这里。';
       }
     }
-    status.textContent = loading ? '正在读取应用与快捷方式…' : issue || (query ? `${label}中找到 ${filtered.length} 个结果` : `${filtered.length} 个${label}`);
+    status.textContent = loading ? '正在读取应用与快捷方式…' : issue || (query.text ? `${label}中找到 ${filtered.length} 个结果` : `${filtered.length} 个${label}`);
     refresh.disabled = Boolean(loading);
     refresh.textContent = loading ? '正在读取…' : '刷新列表';
   }

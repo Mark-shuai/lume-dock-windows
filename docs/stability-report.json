@@ -1,43 +1,43 @@
 {
-  "date": "2026-10-19T04:31:36.034Z",
-  "appVersion": "0.12.12",
+  "date": "2026-10-20T12:50:07.943Z",
+  "appVersion": "0.12.13",
   "platform": "darwin",
   "arch": "arm64",
   "electron": "44.8.0",
   "simulatedApps": 1000,
   "measuredCycles": 40,
-  "durationMs": 1714,
-  "rendererHeapBeforeBytes": 1719312,
-  "rendererHeapAfterBytes": 1741764,
-  "rendererHeapGrowthBytes": 22452,
-  "nativeIconReads": 65,
+  "durationMs": 1734,
+  "rendererHeapBeforeBytes": 1773780,
+  "rendererHeapAfterBytes": 1808228,
+  "rendererHeapGrowthBytes": 34448,
+  "nativeIconReads": 47,
   "processMemoryBefore": [
     {
       "type": "Browser",
       "memory": {
-        "workingSetSize": 158720,
-        "peakWorkingSetSize": 164448
+        "workingSetSize": 164288,
+        "peakWorkingSetSize": 164288
       }
     },
     {
       "type": "GPU",
       "memory": {
-        "workingSetSize": 121856,
-        "peakWorkingSetSize": 122112
+        "workingSetSize": 124688,
+        "peakWorkingSetSize": 126336
       }
     },
     {
       "type": "Utility",
       "memory": {
-        "workingSetSize": 46800,
-        "peakWorkingSetSize": 48560
+        "workingSetSize": 48448,
+        "peakWorkingSetSize": 48448
       }
     },
     {
       "type": "Tab",
       "memory": {
-        "workingSetSize": 175680,
-        "peakWorkingSetSize": 251056
+        "workingSetSize": 180912,
+        "peakWorkingSetSize": 257216
       }
     }
   ],
@@ -45,29 +45,29 @@
     {
       "type": "Browser",
       "memory": {
-        "workingSetSize": 160592,
-        "peakWorkingSetSize": 164448
+        "workingSetSize": 150592,
+        "peakWorkingSetSize": 164496
       }
     },
     {
       "type": "GPU",
       "memory": {
-        "workingSetSize": 123088,
-        "peakWorkingSetSize": 123152
+        "workingSetSize": 100864,
+        "peakWorkingSetSize": 128304
       }
     },
     {
       "type": "Utility",
       "memory": {
-        "workingSetSize": 46800,
-        "peakWorkingSetSize": 48560
+        "workingSetSize": 41808,
+        "peakWorkingSetSize": 48448
       }
     },
     {
       "type": "Tab",
       "memory": {
-        "workingSetSize": 181744,
-        "peakWorkingSetSize": 251056
+        "workingSetSize": 166080,
+        "peakWorkingSetSize": 257216
       }
     }
   ],

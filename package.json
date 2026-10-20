@@ -1,6 +1,6 @@
 {
   "name": "lume-dock",
-  "version": "0.12.12",
+  "version": "0.12.13",
   "description": "A calm, compact dock for Windows shortcuts.",
   "main": "main.js",
   "scripts": {
