@@ -1,0 +1,25 @@
+{
+  "version": "0.12.5",
+  "date": "2026-10-18T07:21:27.618Z",
+  "host": "darwin arm64",
+  "unitTests": {
+    "passed": 56,
+    "total": 56
+  },
+  "electronUI": [
+    "settings",
+    "library",
+    "features",
+    "regressions"
+  ],
+  "packagedFilesVerified": 41,
+  "packagedVersion": "0.12.5",
+  "applicationPeMachine": "AMD64",
+  "installer": {
+    "file": "dist/Lume-Dock-Setup-0.12.5-x64.exe",
+    "bytes": 115175750,
+    "sha256": "ce6ca725e0a1225f0b7c86183d332659051494f894909fc3ebfb154f89e82c62"
+  },
+  "upgradeHelperSha256": "9c107c3c56337789665767c22bf6ac5466851fb93e48130815da49edfb508a31",
+  "limitations": "Windows 11 installation, native window/DPI behavior and real-world memory still require on-device validation."
+}

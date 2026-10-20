@@ -1,0 +1,31 @@
+{
+  "version": "0.12.9",
+  "date": "2026-10-18T10:49:22.774Z",
+  "host": "darwin arm64",
+  "unitTests": {
+    "passed": 76,
+    "total": 76
+  },
+  "electronUI": [
+    "custom-icons",
+    "appearance",
+    "launcher",
+    "dedup",
+    "library",
+    "settings",
+    "material",
+    "regressions",
+    "quit (app and IPC)"
+  ],
+  "packagedFilesVerified": 48,
+  "packagedVersion": "0.12.9",
+  "applicationPeMachine": "0x8664",
+  "installer": {
+    "file": "dist/Lume-Dock-Setup-0.12.9-x64.exe",
+    "bytes": 115183231,
+    "peMachine": "0x14c",
+    "targetApplication": "Windows x64",
+    "sha256": "94e2960ed9cccbfd9935cbf1911cf9ec71bc0092232bcb4783c0ad9857d4972f"
+  },
+  "limitations": "Native Windows file picker, Shell/GDI, compositor, install and upgrade require Windows 11 validation. Short simulated tests do not establish long-term memory behavior. No code-signing certificate configured."
+}

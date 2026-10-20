@@ -1,0 +1,20 @@
+const {app,BrowserWindow}=require('electron');
+const fs=require('node:fs');
+const {spawn}=require('node:child_process');
+const helpers=require('../helper-processes');
+app.setPath('userData',process.env.LUME_QUIT_USER_DATA);
+require('../main');
+app.whenReady().then(async()=>{
+  const dock=BrowserWindow.getAllWindows()[0];
+  if(dock.webContents.isLoading())await new Promise(resolve=>dock.webContents.once('did-finish-load',resolve));
+  await dock.webContents.executeJavaScript('window.dockReady');
+  await dock.webContents.executeJavaScript('settings.autoHide=true;save();window.dockAPI.setAutoHide(true);window.dockAPI.openSettings()');
+  const options={env:{...process.env,ELECTRON_RUN_AS_NODE:'1'},stdio:['ignore','pipe','pipe']};
+  const script='process.stdout.write("ready");setInterval(()=>{},1000)';
+  const helper=helpers.spawn(process.execPath,['-e',script],options);
+  const user=spawn(process.execPath,['-e',script],options);
+  await Promise.all([helper,user].map(child=>new Promise((resolve,reject)=>{child.stdout.once('data',resolve);child.once('error',reject);})));
+  fs.writeFileSync(process.env.LUME_QUIT_REPORT,JSON.stringify({helperPid:helper.pid,userPid:user.pid,windows:BrowserWindow.getAllWindows().length}));
+  if(process.argv.includes('ipc'))void dock.webContents.executeJavaScript('window.dockAPI.quit()').catch(()=>{});
+  else app.quit();
+}).catch(error=>{console.error(error);app.exit(1);});

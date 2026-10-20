@@ -1,0 +1,32 @@
+{
+  "version": "0.12.8",
+  "date": "2026-10-18T10:12:23.494Z",
+  "host": "darwin arm64",
+  "unitTests": {
+    "passed": 71,
+    "total": 71
+  },
+  "electronUI": [
+    "material",
+    "appearance",
+    "regressions",
+    "settings",
+    "dedup"
+  ],
+  "powershell": {
+    "productionCSharpCompiled": true,
+    "alphaLogicPassed": true,
+    "syntax": "all scripts/tests parsed"
+  },
+  "packagedFilesVerified": 45,
+  "packagedVersion": "0.12.8",
+  "applicationPeMachine": "0x8664",
+  "installer": {
+    "file": "dist/Lume-Dock-Setup-0.12.8-x64.exe",
+    "bytes": 115178830,
+    "peMachine": "0x14c",
+    "targetApplication": "Windows x64",
+    "sha256": "196cdf1ced1f69713ce6e03c5cd6be945e7f28803590e7b31bc5069c860c8271"
+  },
+  "limitations": "Windows native Shell/GDI/ICO AND mask fixture skipped on macOS. Native Windows compositor, install and upgrade still require on-device validation. No code-signing certificate configured."
+}

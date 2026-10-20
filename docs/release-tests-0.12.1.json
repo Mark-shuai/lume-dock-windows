@@ -1,0 +1,64 @@
+{
+  "version": "0.12.1",
+  "date": "2026-10-18T11:07:14.274926+08:00",
+  "host": "macOS-27.0.1-arm64-arm-64bit",
+  "node": "v24.14.0",
+  "results": [
+    {
+      "command": "npm test",
+      "status": "passed",
+      "exitCode": 0,
+      "seconds": 0.37
+    },
+    {
+      "command": "npm run test:ui",
+      "status": "passed",
+      "exitCode": 0,
+      "seconds": 2.07
+    },
+    {
+      "command": "npm run test:launcher",
+      "status": "passed",
+      "exitCode": 0,
+      "seconds": 2.4
+    },
+    {
+      "command": "npm run test:appearance",
+      "status": "passed",
+      "exitCode": 0,
+      "seconds": 8.1
+    },
+    {
+      "command": "npm run test:integration",
+      "status": "passed",
+      "exitCode": 0,
+      "seconds": 1.04
+    },
+    {
+      "command": "npm run test:regressions",
+      "status": "passed",
+      "exitCode": 0,
+      "seconds": 21.14
+    },
+    {
+      "command": "npm run test:features",
+      "status": "passed",
+      "exitCode": 0,
+      "seconds": 21.52
+    },
+    {
+      "command": "npm run test:stability",
+      "status": "passed",
+      "exitCode": 0,
+      "seconds": 5.51
+    },
+    {
+      "command": "npm run test:windows-icons",
+      "status": "skipped",
+      "exitCode": 0,
+      "seconds": 0.39
+    }
+  ],
+  "priorIssue": "Initial stability run found hidden native windows could retain renderer timers when native show/hide events and document.hidden were absent or delayed. Main-process visibility notifications now explicitly cover programmatic transitions; clocks/battery/lyrics follow native visibility, with regression coverage.",
+  "packagedHelperRegression": "Persistent fullscreen helper now loads script through Electron fs and passes encoded text to PowerShell, avoiding inaccessible -File app.asar paths; unit coverage verifies Unicode script text, PID, stdin probes, cached source and restart."
+}

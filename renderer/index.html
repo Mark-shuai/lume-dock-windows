@@ -1,0 +1,222 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Lume Dock</title>
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <main class="dock-shell" aria-label="Lume Dock">
+      <section class="dock" id="dock">
+        <div class="dock-status" id="dockStatus" aria-label="系统信息">
+          <button class="system-chip lyrics-chip" id="lyricsStatus" type="button" hidden aria-label="打开状态栏歌词设置">
+            <span class="lyrics-meta" id="lyricsMeta"></span>
+            <span class="lyrics-line" id="lyricsLine">还没有歌词</span>
+          </button>
+          <time class="system-chip" id="systemTime" datetime="">--:--</time>
+          <span class="system-chip battery-chip" id="batteryStatus" hidden></span>
+          <button class="system-chip sound-chip" id="soundStatus" type="button" aria-label="打开声音设置">⌁ 音频</button>
+        </div>
+        <div class="dock-topline">
+          <div class="brand-lockup">
+            <span class="brand-mark" aria-hidden="true"><span></span></span>
+            <span>LUME DOCK</span>
+          </div>
+          <span class="status-copy" id="statusCopy">已固定 7 个应用</span>
+        </div>
+        <div class="dock-row" id="dockRow" aria-label="固定应用"></div>
+        <button class="dock-scroll dock-scroll-prev" id="dockScrollPrev" type="button" aria-label="向左查看程序坞应用" title="向左滚动" hidden>‹</button>
+        <button class="dock-scroll dock-scroll-next" id="dockScrollNext" type="button" aria-label="向右查看程序坞应用" title="向右滚动" hidden>›</button>
+        <div class="drop-hint" id="dropHint" role="status" aria-live="polite" hidden>释放以添加到程序坞</div>
+      </section>
+
+      <section class="launcher-panel" id="launcherPanel" aria-labelledby="launcherTitle" hidden>
+        <header class="launcher-header">
+          <div class="launcher-heading">
+            <h1 id="launcherTitle">全部应用</h1>
+            <div class="launcher-kinds" role="group" aria-label="入口分类">
+              <button class="launcher-kind" data-kind="apps" type="button" aria-pressed="true" aria-controls="appGrid">应用 <span data-kind-count="apps">0</span></button>
+              <button class="launcher-kind" data-kind="shortcuts" type="button" aria-pressed="false" aria-controls="appGrid">快捷方式 <span data-kind-count="shortcuts">0</span></button>
+            </div>
+          </div>
+          <button class="icon-button" id="closeLauncher" type="button" aria-label="返回程序坞">×</button>
+        </header>
+        <div class="launcher-search">
+          <span aria-hidden="true">⌕</span>
+          <input id="appSearch" type="search" placeholder="搜索应用名称…" aria-label="搜索应用名称" autocomplete="off" spellcheck="false" />
+          <kbd>Enter 打开</kbd>
+        </div>
+        <div class="launcher-toolbar">
+          <div class="launcher-filters" role="group" aria-label="筛选应用">
+            <button class="launcher-filter" data-filter="all" type="button" aria-pressed="true">全部</button>
+            <button class="launcher-filter" data-filter="pinned" type="button" aria-pressed="false">已固定</button>
+            <button class="launcher-filter" data-filter="recent" type="button" aria-pressed="false">最近使用</button>
+          </div>
+          <div class="launcher-actions">
+            <button class="text-button" id="refreshApps" type="button">刷新列表</button>
+            <button class="add-link" id="launcherAdd" type="button">+ 手动添加</button>
+          </div>
+        </div>
+        <p class="launcher-status" id="launcherStatus" role="status" aria-live="polite"></p>
+        <div class="app-grid" id="appGrid" role="list" aria-label="应用列表" aria-busy="false"></div>
+        <div class="launcher-empty" id="launcherEmpty" hidden>
+          <p id="launcherEmptyTitle"></p><small id="launcherEmptyCopy"></small>
+        </div>
+        <footer class="launcher-bottom"><span>点击打开 · ☆ 固定 · 右键更换图标</span><span>Esc 返回</span></footer>
+      </section>
+
+      <section class="settings-panel" id="settingsPanel" aria-hidden="true">
+        <div class="panel-header">
+          <div>
+            <p class="panel-kicker">DOCK SETTINGS</p>
+            <h1>程序坞设置</h1>
+            <p class="settings-drag-hint">拖动标题栏移动窗口 · 调整后实时预览</p>
+          </div>
+          <button class="icon-button" id="closeSettings" type="button" aria-label="关闭设置">×</button>
+        </div>
+        <div class="panel-body">
+          <div class="panel-column">
+            <div class="section-heading">
+              <div>
+                <p class="section-title">外观与行为</p>
+                <p class="section-description">调整程序坞在桌面上的存在方式</p>
+              </div>
+            </div>
+            <label class="setting-row">
+              <span><strong>自动隐藏</strong><small>移动到屏幕底部时显示</small></span>
+              <input class="switch" id="autoHideToggle" type="checkbox" />
+            </label>
+            <label class="setting-row">
+              <span><strong>启动时运行</strong><small>登录 Windows 后自动打开</small></span>
+              <input class="switch" id="launchToggle" type="checkbox" checked />
+            </label>
+            <label class="setting-row">
+              <span><strong>放大效果</strong><small>悬停时突出当前应用</small></span>
+              <input class="switch" id="magnifyToggle" type="checkbox" checked />
+            </label>
+            <label class="setting-row"><span><strong>运行中的应用标记</strong><small>正在运行的桌面程序下显示圆点</small></span><input class="switch" id="runningIndicatorsToggle" type="checkbox" /></label>
+            <label class="setting-row"><span><strong>全屏时自动隐藏</strong><small>主屏游戏或视频全屏时避让，默认开启</small></span><input class="switch" id="hideOnFullscreenToggle" type="checkbox" /></label>
+            <div class="material-section" aria-labelledby="dockSizeTitle">
+              <div class="section-heading"><p class="section-title" id="dockSizeTitle">程序坞尺寸</p><button class="text-button" id="resetDockSize" type="button">恢复默认</button></div>
+              <label class="range-row"><span>图标 <output id="iconSizeValue">64px</output></span><input id="iconSize" type="range" min="40" max="72" step="1" /></label>
+              <label class="range-row"><span>宽度 <output id="dockWidthValue">56%</output></span><input id="dockWidth" type="range" min="40" max="100" step="1" /></label>
+            </div>
+            <div class="material-section accent-section" role="group" aria-label="强调色"><p class="section-title">强调色</p><div class="accent-colors">
+              <button type="button" data-accent="#0A84FF" style="--swatch:#0A84FF" aria-label="蓝色" aria-pressed="true"></button>
+              <button type="button" data-accent="#BF5AF2" style="--swatch:#BF5AF2" aria-label="紫色" aria-pressed="false"></button>
+              <button type="button" data-accent="#FF375F" style="--swatch:#FF375F" aria-label="粉红色" aria-pressed="false"></button>
+              <button type="button" data-accent="#FF9F0A" style="--swatch:#FF9F0A" aria-label="橙色" aria-pressed="false"></button>
+              <button type="button" data-accent="#30D158" style="--swatch:#30D158" aria-label="绿色" aria-pressed="false"></button>
+              <button type="button" data-accent="#64D2FF" style="--swatch:#64D2FF" aria-label="青色" aria-pressed="false"></button>
+              <label class="custom-accent">自选<input id="accentColor" type="color" aria-label="自定义强调色" value="#0a84ff" /></label>
+            </div></div>
+            <label class="setting-row theme-setting">
+              <span><strong>外观主题</strong><small>浅色、深色，或跟随 Windows 外观</small></span>
+              <select id="themeSelect" aria-label="外观主题">
+                <option value="system">跟随系统</option>
+                <option value="light">浅色</option>
+                <option value="dark">深色</option>
+              </select>
+            </label>
+            <label class="setting-row">
+              <span><strong>显示回收站图标</strong><small>单击打开；右键可在确认后清空回收站</small></span>
+              <input class="switch" id="recycleBinToggle" type="checkbox" />
+            </label>
+            <div class="material-section" aria-labelledby="materialTitle">
+              <div class="section-heading material-heading">
+                <div>
+                  <p class="section-title" id="materialTitle">玻璃底座</p>
+                  <p class="section-description">调节圆角、透明度、模糊和光影质感</p>
+                </div>
+              </div>
+              <label class="range-row"><span>圆角 <output id="glassRadiusValue">22px</output></span><input id="glassRadius" type="range" min="8" max="40" step="1" /></label>
+              <label class="range-row"><span>透明度 <output id="glassOpacityValue">35%</output></span><input id="glassOpacity" type="range" min="10" max="75" step="1" /></label>
+              <label class="range-row"><span>模糊 <output id="glassBlurValue">28px</output></span><input id="glassBlur" type="range" min="0" max="48" step="1" /></label>
+              <label class="range-row"><span>高光 <output id="glassHighlightValue">65%</output></span><input id="glassHighlight" type="range" min="0" max="100" step="1" /></label>
+              <label class="range-row"><span>阴影 <output id="glassShadowValue">24%</output></span><input id="glassShadow" type="range" min="0" max="60" step="1" /></label>
+            </div>
+            <label class="setting-row">
+              <span><strong>显示系统信息栏</strong><small>在程序坞上方显示时间、电池和音频入口，默认关闭</small></span>
+              <input class="switch" id="systemInfoToggle" type="checkbox" />
+            </label>
+            <label class="setting-row">
+              <span><strong>显示状态栏歌词</strong><small>在程序坞上方显示当前歌词，默认关闭</small></span>
+              <input class="switch" id="lyricsToggle" type="checkbox" />
+            </label>
+            <div class="lyrics-config" id="lyricsConfig" hidden>
+              <div><strong>歌词内容</strong><small>每行歌词会按顺序轮播，也可以只显示当前行</small></div>
+              <button class="text-button" id="editLyricsButton" type="button">编辑歌词</button>
+            </div>
+            <label class="setting-row">
+              <span><strong>桌面右键收纳</strong><small id="desktopIntegrationHint">右键加入后，将桌面快捷方式移入回收站</small></span>
+              <input class="switch" id="desktopIntegrationToggle" type="checkbox" aria-describedby="desktopIntegrationHint" disabled />
+            </label>
+          </div>
+          <div class="panel-column">
+            <div class="section-heading">
+              <div>
+                <p class="section-title">固定应用</p>
+                <p class="section-description">拖动图标调整顺序，或移除不常用的入口</p>
+              </div>
+              <div class="heading-actions"><button class="text-button" id="importButton" type="button" title="扫描结果只收录到全部应用，点星号后才固定">重新扫描桌面</button><button class="text-button" id="exportConfigButton" type="button">导出配置</button><button class="text-button" id="importConfigButton" type="button">导入配置</button><button class="text-button" id="addSeparator" type="button">+ 分隔线</button><button class="add-link" id="addButton" type="button">+ 手动添加</button></div>
+            </div>
+            <div class="manage-list" id="manageList"></div>
+          </div>
+        </div>
+        <div class="panel-bottom">
+          <span class="storage-note"><span class="saved-dot"></span>更改会自动保存在这台电脑上</span>
+          <button class="quit-button" id="quitButton" type="button">退出 Lume Dock</button>
+        </div>
+      </section>
+
+      <dialog class="add-dialog" id="addDialog">
+        <form method="dialog" id="addForm">
+          <div class="dialog-header">
+            <div><p class="panel-kicker">NEW SHORTCUT</p><h2>添加一个入口</h2></div>
+            <button class="icon-button" type="button" onclick="document.querySelector('#addDialog').close()" aria-label="关闭">×</button>
+          </div>
+          <label class="field-label">名称<input name="name" required maxlength="20" placeholder="例如：工作文件夹" /></label>
+          <label class="field-label">打开位置<input name="target" required placeholder="文件夹路径或 https:// 链接" /></label>
+          <div class="target-picker"><button class="cancel-button" id="pickFileButton" type="button">选择程序或快捷方式</button><button class="cancel-button" id="pickFolderButton" type="button">选择文件夹</button></div>
+          <p class="picker-hint">也可以直接输入路径或网址</p>
+          <p class="field-error" id="addError" role="status" aria-live="polite"></p>
+          <div class="dialog-actions"><button class="cancel-button" type="button" onclick="document.querySelector('#addDialog').close()">取消</button><button class="primary-button" type="submit">添加到程序坞</button></div>
+        </form>
+      </dialog>
+
+      <dialog class="lyrics-dialog" id="lyricsDialog">
+        <form method="dialog" id="lyricsForm">
+          <div class="dialog-header">
+            <div><p class="panel-kicker">STATUS LYRICS</p><h2>状态栏歌词</h2></div>
+            <button class="icon-button" type="button" id="closeLyricsButton" aria-label="关闭歌词设置">×</button>
+          </div>
+          <label class="field-label">歌曲名称<input name="title" maxlength="80" placeholder="例如：夜空中最亮的星" /></label>
+          <label class="field-label">歌手<input name="artist" maxlength="80" placeholder="可选" /></label>
+          <label class="field-label">歌词<textarea name="lyrics" rows="7" maxlength="4000" placeholder="每行输入一句歌词"></textarea></label>
+          <label class="setting-row dialog-setting"><span><strong>逐行播放</strong><small>按设定秒数自动切换下一行</small></span><input class="switch" name="autoPlay" type="checkbox" /></label>
+          <label class="range-row dialog-range"><span>每行停留 <output id="lyricsIntervalValue">4 秒</output></span><input name="interval" id="lyricsInterval" type="range" min="1" max="12" step="1" value="4" /></label>
+          <p class="field-error" id="lyricsError" role="status" aria-live="polite"></p>
+          <div class="dialog-actions"><button class="cancel-button" type="button" id="cancelLyricsButton">取消</button><button class="primary-button" type="submit">保存歌词</button></div>
+        </form>
+      </dialog>
+
+      <dialog id="iconDialog" class="icon-dialog" aria-labelledby="iconDialogTitle" aria-describedby="iconDialogCopy">
+        <div class="dialog-heading"><h2 id="iconDialogTitle">自定义图标</h2><button class="icon-button" id="closeIconDialog" type="button" aria-label="关闭图标设置">×</button></div>
+        <div class="icon-preview"><img id="customIconPreview" src="./assets/macos/generic.png" alt="" /><strong id="customIconName"></strong></div>
+        <p id="iconDialogCopy">选择 PNG、JPG 或 ICO 图片，建议使用透明背景的正方形图标。原图移动后仍会保留。</p>
+        <p class="field-error" id="customIconError" role="status" aria-live="polite"></p>
+        <div class="dialog-actions"><button class="cancel-button" id="resetCustomIcon" type="button">恢复默认</button><button class="primary-button" id="chooseCustomIcon" type="button">选择图片…</button></div>
+        <p class="icon-dialog-hint">更换后立即保存，并同步到程序坞和全部应用。</p>
+      </dialog>
+      <div class="toast" id="toast" role="status" aria-live="polite"></div>
+    </main>
+    <script src="./custom-icons.js"></script>
+    <script src="./icon-editor.js"></script>
+    <script src="./icons.js"></script>
+    <script src="./dock-motion.js"></script>
+    <script src="./app-identity.js"></script>
+    <script src="./launcher.js"></script>
+    <script src="./app.js"></script>
+  </body>
+</html>

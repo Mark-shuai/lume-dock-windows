@@ -1,0 +1,35 @@
+{
+  "version": "0.12.2",
+  "date": "2026-10-18T03:55:10.134Z",
+  "host": "darwin arm64",
+  "unitTests": {
+    "passed": 54,
+    "total": 54
+  },
+  "uiSmoke": "passed",
+  "upgradeFixtures": {
+    "status": "passed",
+    "host": "macOS PowerShell Core 7.4.6",
+    "covers": [
+      "sibling stage",
+      "source copy hash",
+      "user data retention",
+      "failed stage retained",
+      "argument allowlist",
+      "isolated child TEMP/TMP/cwd"
+    ],
+    "windowsNativeVolumes": "not run"
+  },
+  "nsisBuild": "passed; default installer and uninstaller two-pass generation; builder cleans intermediate uninstaller after embedding",
+  "packagedFilesVerified": 41,
+  "packagedVersion": "0.12.2",
+  "patchedTemplateSha256": "6401ac9224c6537828616d5295d4f91d0fdda3c5663ef2cddbef93304d742382",
+  "upgradeHelperSha256": "9c107c3c56337789665767c22bf6ac5466851fb93e48130815da49edfb508a31",
+  "installer": {
+    "file": "dist/Lume-Dock-Setup-0.12.2-x64.exe",
+    "bytes": 115172495,
+    "sha256": "342efa7b86a6ae3f0ae75644bcd0d360c17276bb347fd83eb017b17fd06af6c6"
+  },
+  "applicationPeMachine": "AMD64",
+  "limitations": "Windows 11 E-to-C legacy upgrade, permissions and locked files still require user-machine validation."
+}

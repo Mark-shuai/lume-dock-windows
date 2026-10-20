@@ -1,0 +1,33 @@
+{
+  "version": "0.12.6",
+  "date": "2026-10-18T07:45:46.169Z",
+  "host": "darwin arm64",
+  "unitTests": {
+    "passed": 62,
+    "total": 62
+  },
+  "electronUI": [
+    "dedup",
+    "launcher",
+    "library",
+    "settings",
+    "stability"
+  ],
+  "stability": {
+    "apps": 1000,
+    "cycles": 40,
+    "heapBefore": 3439192,
+    "heapAfter": 3458140,
+    "limitation": "Renderer GC heap only, not Windows total process memory."
+  },
+  "packagedFilesVerified": 44,
+  "packagedVersion": "0.12.6",
+  "applicationPeMachine": "AMD64",
+  "installer": {
+    "file": "dist/Lume-Dock-Setup-0.12.6-x64.exe",
+    "bytes": 115177876,
+    "sha256": "a128d3638a0c4eb84545c834bb3d046c454682716c238c0d869a49d0e9c6d4f4"
+  },
+  "upgradeHelperSha256": "9c107c3c56337789665767c22bf6ac5466851fb93e48130815da49edfb508a31",
+  "limitations": "Windows 11 COM shortcut/AppID resolution, installation and native DPI require on-device validation. One concurrent stability run failed a fixed-delay scroll assertion; isolated rerun passed and the fixture now waits for the actual render."
+}

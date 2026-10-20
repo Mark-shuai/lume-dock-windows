@@ -1,0 +1,70 @@
+{
+  "apps": {
+    "source": "/System/Applications/Apps.app/Contents/Resources/AppIcon.icns",
+    "file": "apps.png"
+  },
+  "browser": {
+    "source": "/Applications/Safari.app/Contents/Resources/AppIconUpdated.icns",
+    "file": "browser.png"
+  },
+  "files": {
+    "source": "/System/Library/CoreServices/Finder.app/Contents/Resources/Finder.icns",
+    "file": "files.png"
+  },
+  "terminal": {
+    "source": "/System/Applications/Utilities/Terminal.app/Contents/Resources/Terminal.icns",
+    "file": "terminal.png"
+  },
+  "music": {
+    "source": "/System/Applications/Music.app/Contents/Resources/AppIcon.icns",
+    "file": "music.png"
+  },
+  "notes": {
+    "source": "/System/Applications/Notes.app/Contents/Resources/AppIcon.icns",
+    "file": "notes.png"
+  },
+  "calendar": {
+    "source": "/System/Applications/Calendar.app/Contents/Resources/AppIcon.icns",
+    "file": "calendar.png"
+  },
+  "downloads": {
+    "source": "/System/Library/CoreServices/CoreTypes.bundle/Contents/Resources/DownloadsFolder.icns",
+    "file": "downloads.png"
+  },
+  "generic": {
+    "source": "/System/Library/CoreServices/CoreTypes.bundle/Contents/Resources/GenericApplicationIcon.icns",
+    "file": "generic.png"
+  },
+  "folder": {
+    "source": "/System/Library/CoreServices/CoreTypes.bundle/Contents/Resources/GenericFolderIcon.icns",
+    "file": "folder.png"
+  },
+  "calculator": {
+    "source": "/System/Applications/Calculator.app/Contents/Resources/AppIcon.icns",
+    "file": "calculator.png"
+  },
+  "photos": {
+    "source": "/System/Applications/Photos.app/Contents/Resources/AppIcon.icns",
+    "file": "photos.png"
+  },
+  "mail": {
+    "source": "/System/Applications/Mail.app/Contents/Resources/ApplicationIcon.icns",
+    "file": "mail.png"
+  },
+  "maps": {
+    "source": "/System/Applications/Maps.app/Contents/Resources/AppIcon.icns",
+    "file": "maps.png"
+  },
+  "clock": {
+    "source": "/System/Applications/Clock.app/Contents/Resources/AppIcon.icns",
+    "file": "clock.png"
+  },
+  "reminders": {
+    "source": "/System/Applications/Reminders.app/Contents/Resources/AppIcon.icns",
+    "file": "reminders.png"
+  },
+  "settings": {
+    "source": "/System/Applications/System Settings.app/Contents/Resources/Settings.icns",
+    "file": "settings.png"
+  }
+}

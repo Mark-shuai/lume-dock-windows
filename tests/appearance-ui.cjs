@@ -1,0 +1,67 @@
+const { app, BrowserWindow } = require('electron');
+const fs = require('node:fs');
+const os = require('node:os');
+const path = require('node:path');
+const assert = require('node:assert/strict');
+app.setPath('userData', fs.mkdtempSync(path.join(os.tmpdir(), 'lume-appearance-')));
+app.whenReady().then(async () => {
+  const win = new BrowserWindow({ width: 1100, height: 760, show: false, webPreferences: { contextIsolation: true, nodeIntegration: false, backgroundThrottling: false } });
+  const js = (source) => win.webContents.executeJavaScript(source);
+  const pause = (ms = 350) => new Promise((resolve) => setTimeout(resolve, ms));
+  const imagesLoaded = () => js(`Promise.all([...document.images].map(image => image.decode().catch(() => {}))).then(() => [...document.images].every(image => image.naturalWidth > 0))`);
+  async function screenshot(name) { await pause(); fs.writeFileSync(path.join(__dirname, '../docs/', name), (await win.capturePage()).toPNG()); }
+  try {
+    await win.loadFile(path.join(__dirname, '../renderer/index.html'));
+    await js('window.dockReady');
+    assert.equal(await imagesLoaded(), true);
+    await win.webContents.debugger.attach('1.3');
+    await win.webContents.debugger.sendCommand('Emulation.setEmulatedMedia', { features: [{ name: 'prefers-reduced-motion', value: 'no-preference' }] });
+    const point = await js(`(() => { const cell = document.querySelectorAll('.dock-item')[4]; const rect = cell.getBoundingClientRect(); return { x: Math.round(rect.x + rect.width/2), y: Math.round(rect.y + 45) }; })()`);
+    await js(`document.querySelector('#dockRow').dispatchEvent(new PointerEvent('pointermove', {clientX:${point.x}, clientY:${point.y}, pointerType:'mouse', bubbles:true}))`);
+    await js(`document.querySelectorAll('.dock-icon')[4].focus()`);
+    await pause(2400);
+    const magnified = await js(`(() => { const cells = [...document.querySelectorAll('.dock-item')]; return { scales: cells.map(cell => Number(cell.style.getPropertyValue('--dock-scale'))), offsets: cells.map(cell => parseFloat(cell.style.getPropertyValue('--dock-shift'))), tooltip: getComputedStyle(cells[4].querySelector('.dock-label')).opacity, rows: cells.map(cell => ({left:cell.getBoundingClientRect().left, right:cell.getBoundingClientRect().right})) }; })()`);
+    assert.ok(magnified.scales[4] > 1.5, JSON.stringify(magnified));
+    assert.ok(magnified.scales[4] > magnified.scales[3] && magnified.scales[3] > magnified.scales[2]);
+    assert.ok(magnified.offsets[1] < 0 && magnified.offsets[7] > 0);
+    assert.equal(magnified.tooltip, '1');
+    assert.ok(magnified.rows[0].left >= 0 && magnified.rows.at(-1).right <= 1100);
+    await screenshot('macos-dock-preview.png');
+    await js(`document.activeElement.blur(); document.querySelector('#dockRow').dispatchEvent(new PointerEvent('pointerleave'))`);
+    await pause(2400);
+    assert.ok(await js(`[...document.querySelectorAll('.dock-item')].every(cell => Math.abs(Number(cell.style.getPropertyValue('--dock-scale')) - 1) < .002)`));
+    await js(`document.body.classList.add('no-magnify'); dockMotion.reset()`);
+    await js(`document.querySelector('#dockRow').dispatchEvent(new PointerEvent('pointermove', {clientX:${point.x}, clientY:${point.y}, pointerType:'mouse', bubbles:true}))`);
+    await pause();
+    assert.ok(await js(`[...document.querySelectorAll('.dock-item')].every(cell => Number(cell.style.getPropertyValue('--dock-scale')) === 1)`));
+    await js(`document.body.classList.remove('no-magnify')`);
+    win.webContents.setBackgroundThrottling(false);
+    await win.webContents.debugger.sendCommand('Emulation.setEmulatedMedia', { features: [{ name: 'prefers-reduced-motion', value: 'reduce' }] });
+    await js(`document.querySelector('#dockRow').dispatchEvent(new PointerEvent('pointermove', {clientX:${point.x}, clientY:${point.y}, pointerType:'mouse', bubbles:true}))`);
+    await pause();
+    assert.ok(await js(`[...document.querySelectorAll('.dock-item')].every(cell => Number(cell.style.getPropertyValue('--dock-scale')) === 1)`));
+    await win.webContents.debugger.sendCommand('Emulation.setEmulatedMedia', { features: [] });
+    win.webContents.debugger.detach();
+    await js('launcher.open()');
+    assert.equal(await imagesLoaded(), true);
+    assert.match(await js('document.querySelector("#launcherStatus").textContent'), /外观预览/);
+    await pause();
+    assert.equal(await js('getComputedStyle(document.querySelector("#dock")).visibility'), 'hidden');
+    await screenshot('macos-apps-preview.png');
+    await js(`document.querySelector('.app-pin').click()`);
+    assert.ok(await js('items.every(item => !item.target.startsWith("preview:"))'));
+    await js('launcher.close()');
+    win.setBounds({width:720,height:760});
+    await pause();
+    assert.ok(await js(`document.querySelector('#dockRow').classList.contains('is-scrollable')`), '64px icons retain the selected size and scroll on narrow screens');
+    await js(`settings.iconSize = 40; applyDockPreferences(); dockMotion.refresh()`);
+    await pause();
+    assert.ok(await js(`document.querySelector('#dockRow').scrollWidth === document.querySelector('#dockRow').clientWidth`), '40px icons fit at 720px');
+    assert.equal(await imagesLoaded(), true);
+    // With many entries, the visible strip remains scrollable and all assets resolve.
+    await js(`for (let i=0;i<25;i++) items.push({id:'extra-'+i,name:'App '+i,target:'preview-extra-'+i}); renderDock()`);
+    assert.ok(await js(`document.querySelector('#dockRow').scrollWidth > document.querySelector('#dockRow').clientWidth`));
+    console.log('Appearance UI passed: real icon assets, continuous magnification, neighbor displacement, tooltip, reset, disable, reduced motion, browser preview and overflow');
+    app.exit(0);
+  } catch (error) { console.error(error); app.exit(1); }
+});

@@ -1,0 +1,31 @@
+{
+  "version": "0.12.4",
+  "date": "2026-10-18T04:55:06.675Z",
+  "host": "darwin arm64",
+  "unitTests": {
+    "passed": 56,
+    "total": 56
+  },
+  "electronUI": [
+    "library",
+    "launcher",
+    "ui",
+    "integration",
+    "regressions",
+    "features",
+    "appearance",
+    "settings",
+    "stability"
+  ],
+  "stabilityFixture": "1000 apps, 40 cycles, renderer GC heap 3.66 to 3.68 MiB; not total application memory",
+  "packagedFilesVerified": 41,
+  "packagedVersion": "0.12.4",
+  "applicationPeMachine": "AMD64",
+  "installer": {
+    "file": "dist/Lume-Dock-Setup-0.12.4-x64.exe",
+    "bytes": 115175678,
+    "sha256": "8c261f19c1b514fe9df8e1cf94ad1956a074026aa647e28ddb97e3411e267b9f"
+  },
+  "upgradeHelperSha256": "9c107c3c56337789665767c22bf6ac5466851fb93e48130815da49edfb508a31",
+  "limitations": "Windows 11 installation, native icon rendering, mouse wheel, display DPI and real-world memory still require on-device validation."
+}

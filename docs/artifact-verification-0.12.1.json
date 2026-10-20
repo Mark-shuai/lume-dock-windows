@@ -1,0 +1,184 @@
+{
+  "version": "0.12.1",
+  "date": "2026-10-18T03:11:55.643Z",
+  "buildCommand": "npm run dist",
+  "buildExitCode": 0,
+  "target": "Windows x64 NSIS",
+  "host": "darwin arm64",
+  "packagedVersion": "0.12.1",
+  "packagedFilesChecked": 41,
+  "packagedSources": [
+    {
+      "file": "main.js",
+      "sha256": "26b4d0793ad47a9620e300c98545638c41e101ca041a1ced260761922a6d1742"
+    },
+    {
+      "file": "icon-service.js",
+      "sha256": "42c39b3402b239a5e2ebde797780c7dc9c72004c89ff586ed6ce2d43f3227acd"
+    },
+    {
+      "file": "windows-icons.js",
+      "sha256": "fa66394a8e2363dc62bbc76901f892a5f2bc540dc8e0ffffdcb225361c695339"
+    },
+    {
+      "file": "preload.js",
+      "sha256": "c5cbbf950b3b48569c81d56b42b1c080732af11309335320930677f91a51c426"
+    },
+    {
+      "file": "windows-apps.js",
+      "sha256": "d8dd1f173e76808ac3c2588a3f50e0534be2e813b08fdaf39e81e46b36dcd962"
+    },
+    {
+      "file": "scripts/list-apps.ps1",
+      "sha256": "c926b2e6939a7b06822998ef435bab069818360e5cad1e66c858cd3a0f91d107"
+    },
+    {
+      "file": "scripts/resolve-icons.ps1",
+      "sha256": "b9108c4e4456ea2185702cb1bd1a0e1dd7354fdc1a2ce94ee580aec593fc90b6"
+    },
+    {
+      "file": "windows-integration.js",
+      "sha256": "d04ae06d3110d20eebadd9c813739c6898d087fff3d472866a0d78d423b5a4a9"
+    },
+    {
+      "file": "tray.js",
+      "sha256": "f6eade31b0ab78fcd167edcda973c408516a77b45aef741690116f38399c9093"
+    },
+    {
+      "file": "system-info.js",
+      "sha256": "bf548be6fd49dd78fa720aafd8fbdb422469cb65f0284c642694cafd1dd5b90b"
+    },
+    {
+      "file": "windows-processes.js",
+      "sha256": "fb8ee8d3b261833eee0af9a8e4abdd766c45832b3cc53ced5811c7de624163f1"
+    },
+    {
+      "file": "fullscreen-monitor.js",
+      "sha256": "f244a1bbf2a5ecb4a811590a856099dcd46e4df5431f0feb45013fac7579dd46"
+    },
+    {
+      "file": "scripts/running-processes.ps1",
+      "sha256": "51507a68ec0a8f97c0df33592819cdc87d040fccac44a8a318326c11f9079e5b"
+    },
+    {
+      "file": "scripts/resolve-targets.ps1",
+      "sha256": "5219f410f4b9ce9d6fa836027c25870e0dbbb761b14e6b26fcc6477b9e432583"
+    },
+    {
+      "file": "scripts/session-monitor.ps1",
+      "sha256": "2a0af87f456b250b1e9e14405958fe6c0708169a4c87d3476a118a24f745a7e0"
+    },
+    {
+      "file": "renderer/app.js",
+      "sha256": "936746b333ca331e90319689b1ed6f70b4194b0f27526b0077d50d949d172445"
+    },
+    {
+      "file": "renderer/assets/macos/NOTICE.md",
+      "sha256": "54bf08b7ed74f6bb2620eee2bb75f6d5085584780eaac611221987e079fbb6c3"
+    },
+    {
+      "file": "renderer/assets/macos/apps.png",
+      "sha256": "fea8d712ace9e70f6aad28ad489f8fd87ea9c1e65f590ab5b5d64d1d90aaf318"
+    },
+    {
+      "file": "renderer/assets/macos/browser.png",
+      "sha256": "9e8d2eb38fdbf0cf1f2566f7a829e825f43fd8155e66e6d577c2d29a8a2cf77c"
+    },
+    {
+      "file": "renderer/assets/macos/calculator.png",
+      "sha256": "215d59b3ea3d07c4d17f8f7b11185e0aedac3cf141a498b37fd5621eb008a217"
+    },
+    {
+      "file": "renderer/assets/macos/calendar.png",
+      "sha256": "ae592fb7654c4936a6b87b99a4deae52054e2beb7668df846bc87f18d0ae5565"
+    },
+    {
+      "file": "renderer/assets/macos/clock.png",
+      "sha256": "60638a3d3e3c912fbce2aeeb32fc52414644b6e0155f627b6102e9438cfa2bca"
+    },
+    {
+      "file": "renderer/assets/macos/downloads.png",
+      "sha256": "7f7363b5cb3caa1ed41dc9c309bbc417eeb9f0f70665b6a0e6d871e165b16096"
+    },
+    {
+      "file": "renderer/assets/macos/files.png",
+      "sha256": "f30731d8cbbf7c602d2d3a0ed8307993ae9327396b0560aae80dcc8d8f1beb1c"
+    },
+    {
+      "file": "renderer/assets/macos/folder.png",
+      "sha256": "f970f320ec7b25949220c7348edaf72ac7ab69cb36ff08c5c64aab249f3de578"
+    },
+    {
+      "file": "renderer/assets/macos/generic.png",
+      "sha256": "13f0a78eaeadf3ef0fcece1624801ecf7d371508fedbe5968a4dadf09f9981f0"
+    },
+    {
+      "file": "renderer/assets/macos/mail.png",
+      "sha256": "5e5bd2db1214c0fbd6741b28a0a617e25cedb658ae574b618f5bfa54fa4fdd3b"
+    },
+    {
+      "file": "renderer/assets/macos/maps.png",
+      "sha256": "d54d5691ae755f980d187b5513cded1289064d738b5c83678d7802f1e6d0c7c0"
+    },
+    {
+      "file": "renderer/assets/macos/music.png",
+      "sha256": "95d017c81c822f4b2a949eaa793760411a483fa7b0230bbc9051127d9d962ee7"
+    },
+    {
+      "file": "renderer/assets/macos/notes.png",
+      "sha256": "29909923e52ea506f02f1251eebe59c478df05f16e20a03e5b7c120d03c02746"
+    },
+    {
+      "file": "renderer/assets/macos/photos.png",
+      "sha256": "72dcf1d85517bbff934b5cf56f86a9810422a3e540c286b6644326a0dbf9d210"
+    },
+    {
+      "file": "renderer/assets/macos/recycle-bin.svg",
+      "sha256": "944866d62c34e9a6c791725c7431441a3cc05e3b9828eba33c11cb376eae7f00"
+    },
+    {
+      "file": "renderer/assets/macos/reminders.png",
+      "sha256": "6e346d68bc940d85124d1e28aea2841e02d09c702aa06e5b5a13756c5d27f7ac"
+    },
+    {
+      "file": "renderer/assets/macos/settings.png",
+      "sha256": "0e82e37550a08ea575c5cf9b6b37a12b1b7d6f9a8130738767d76b003dfdd715"
+    },
+    {
+      "file": "renderer/assets/macos/sources.json",
+      "sha256": "3ee69fdcbec4a4db92ecbb058b3a14c4a7348b08793ffaab13b202f07f7083c7"
+    },
+    {
+      "file": "renderer/assets/macos/terminal.png",
+      "sha256": "0e2341cecffc9955a048f5f8999ae656e7ff730bbc6e19f3bc9c0a5d3299c35d"
+    },
+    {
+      "file": "renderer/dock-motion.js",
+      "sha256": "661d48da777c80e82f8d0ac82935af57de8ad7d8840cebb5faaa9fe9e0961d84"
+    },
+    {
+      "file": "renderer/icons.js",
+      "sha256": "eab3bc186f949794f73365dfcc89eb516cd7a0f03a1a3757c86d87b5ed71ce8d"
+    },
+    {
+      "file": "renderer/index.html",
+      "sha256": "7fb4441c9a0c06f3bf96dbc5ba980b9c4c009c149f96fa6f5ba0b98108af55d0"
+    },
+    {
+      "file": "renderer/launcher.js",
+      "sha256": "a4bab1e08868f37b8bc3d450de699246aa0e7fcb1aff7d11853584731357c7b7"
+    },
+    {
+      "file": "renderer/styles.css",
+      "sha256": "2de119c55b22573019742cf34394d6cab4df57fa66b931d7c080be9af5ce7bf0"
+    }
+  ],
+  "asarSha256": "742086ef3342b42caf44b41d1bd50986bf5c3224246b29d59797bbde7cf0cdd1",
+  "installer": {
+    "file": "dist/Lume-Dock-Setup-0.12.1-x64.exe",
+    "bytes": 115169610,
+    "sha256": "024ac5c48fda4381e5302363b44bf2be2441ad9d286236e6cb9e0731b963ee04"
+  },
+  "applicationPeMachine": "AMD64 (0x8664)",
+  "windowsNativeValidation": "Not run; cross-build and archive integrity checks only."
+}

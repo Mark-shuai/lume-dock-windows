@@ -1,0 +1,80 @@
+{
+  "name": "lume-dock",
+  "version": "0.12.12",
+  "description": "A calm, compact dock for Windows shortcuts.",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron .",
+    "dev": "electron .",
+    "test": "node --test tests/*.test.cjs",
+    "test:ui": "electron tests/ui-smoke.cjs",
+    "test:launcher": "electron tests/launcher-ui.cjs",
+    "dist": "node scripts/build-windows.cjs",
+    "test:appearance": "electron tests/appearance-ui.cjs",
+    "test:material": "electron tests/material-ui.cjs",
+    "test:integration": "electron tests/integration-ui.cjs",
+    "test:stability": "electron tests/stability-ui.cjs",
+    "test:regressions": "electron tests/dock-regressions.cjs",
+    "test:windows-icons": "electron tests/windows-icons-native.cjs",
+    "test:features": "electron tests/features-ui.cjs",
+    "test:upgrade": "node tests/upgrade-runner.cjs",
+    "test:settings": "electron tests/settings-ui.cjs",
+    "test:library": "electron tests/library-ui.cjs",
+    "test:dedup": "electron tests/dedup-ui.cjs",
+    "test:quit": "node tests/quit-runner.cjs",
+    "test:custom-icons": "electron tests/custom-icons-ui.cjs",
+    "test:categories": "electron tests/categories-ui.cjs",
+    "test:auto-hide": "electron tests/auto-hide-ui.cjs",
+    "test:performance": "electron tests/performance-ui.cjs"
+  },
+  "keywords": [
+    "windows",
+    "dock",
+    "electron",
+    "productivity"
+  ],
+  "author": "",
+  "license": "MIT",
+  "devDependencies": {
+    "electron": "^44.8.0",
+    "electron-builder": "^26.0.12"
+  },
+  "build": {
+    "appId": "com.lumedock.app",
+    "productName": "Lume Dock",
+    "files": [
+      "main.js",
+      "auto-hide.js",
+      "helper-processes.js",
+      "icon-service.js",
+      "windows-icons.js",
+      "preload.js",
+      "windows-apps.js",
+      "app-identities.js",
+      "scripts/app-identities.ps1",
+      "scripts/list-apps.ps1",
+      "scripts/resolve-icons.ps1",
+      "renderer/**/*",
+      "windows-integration.js",
+      "tray.js",
+      "system-info.js",
+      "windows-processes.js",
+      "fullscreen-monitor.js",
+      "scripts/running-processes.ps1",
+      "scripts/resolve-targets.ps1",
+      "scripts/session-monitor.ps1",
+      "custom-icon-image.js"
+    ],
+    "win": {
+      "target": "nsis",
+      "artifactName": "Lume-Dock-Setup-${version}-${arch}.${ext}"
+    },
+    "nsis": {
+      "oneClick": false,
+      "allowToChangeInstallationDirectory": true,
+      "createDesktopShortcut": true,
+      "createStartMenuShortcut": true,
+      "include": "scripts/installer.nsh"
+    }
+  }
+}

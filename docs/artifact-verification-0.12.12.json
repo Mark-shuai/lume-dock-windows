@@ -1,0 +1,35 @@
+{
+  "version": "0.12.12",
+  "date": "2026-10-19T04:38:18.063Z",
+  "host": "darwin arm64",
+  "unitTests": {
+    "passed": 85,
+    "total": 85
+  },
+  "electronUI": [
+    "performance (1000 simulated apps and reopen during pending icon)",
+    "stability (40 cycles, 1000 simulated apps)",
+    "launcher",
+    "categories",
+    "custom-icons",
+    "dedup",
+    "library",
+    "settings",
+    "appearance",
+    "regressions",
+    "features",
+    "auto-hide (simulated pointer)",
+    "quit (app and IPC)"
+  ],
+  "packagedFilesVerified": 49,
+  "packagedVersion": "0.12.12",
+  "applicationPeMachine": "0x8664",
+  "installer": {
+    "file": "dist/Lume-Dock-Setup-0.12.12-x64.exe",
+    "bytes": 115185348,
+    "peMachine": "0x14c",
+    "targetApplication": "Windows x64",
+    "sha256": "5f88cefbd4a6e2095a894f9f7fedf4692533a0e3c47af47caa64d0b19ec4c6b3"
+  },
+  "limitations": "macOS synthetic testing and Windows cross-build. Windows native interfaces, real installation/upgrade, compositor and long-run process memory still need Windows 11 validation. No code-signing certificate configured."
+}

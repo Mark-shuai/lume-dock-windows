@@ -1,0 +1,30 @@
+{
+  "version": "0.12.3",
+  "date": "2026-10-18T04:30:23.045Z",
+  "host": "darwin arm64",
+  "unitTests": {
+    "passed": 55,
+    "total": 55
+  },
+  "electronUI": [
+    "settings",
+    "ui",
+    "features",
+    "integration",
+    "stability",
+    "launcher",
+    "appearance",
+    "regressions"
+  ],
+  "upgradeFixtures": "passed on macOS PowerShell Core 7.4.6; Windows volumes not tested",
+  "packagedFilesVerified": 41,
+  "packagedVersion": "0.12.3",
+  "applicationPeMachine": "AMD64",
+  "installer": {
+    "file": "dist/Lume-Dock-Setup-0.12.3-x64.exe",
+    "bytes": 115174456,
+    "sha256": "686acae29bf254fc901299a11d94aee6d485cdddaf88a08363250fb0f515e3bf"
+  },
+  "upgradeHelperSha256": "9c107c3c56337789665767c22bf6ac5466851fb93e48130815da49edfb508a31",
+  "limitations": "Windows 11 native dragging, display DPI, filesystem dialogs and install/upgrade require real-machine validation."
+}

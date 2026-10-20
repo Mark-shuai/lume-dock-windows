@@ -1,0 +1,56 @@
+{
+  "version": "0.12.7",
+  "date": "2026-10-18T08:22:51.783Z",
+  "host": "darwin arm64",
+  "unitTests": {
+    "passed": 68,
+    "total": 68
+  },
+  "electronUI": [
+    "settings",
+    "dedup",
+    "stability"
+  ],
+  "realQuitTests": {
+    "modes": [
+      "app.quit",
+      "renderer quit IPC"
+    ],
+    "windows": 2,
+    "trackedHelperExited": true,
+    "userLaunchedProgramRetained": true
+  },
+  "powershellFixtures": {
+    "runtime": "PowerShell Core on macOS",
+    "passed": [
+      "upgrade-uninstall",
+      "stop-installed-app",
+      "all script parser checks"
+    ],
+    "limitation": "CIM and process termination are mocked in the installer fixtures."
+  },
+  "stability": {
+    "apps": 1000,
+    "cycles": 40,
+    "heapBefore": 3869068,
+    "heapAfter": 3887440,
+    "limitation": "Synthetic short-run test on the reported host. Working sets include shared memory; these are not Windows idle-memory or long-run leak measurements."
+  },
+  "packagedFilesVerified": 45,
+  "packagedVersion": "0.12.7",
+  "applicationPeMachine": "AMD64",
+  "installer": {
+    "file": "dist/Lume-Dock-Setup-0.12.7-x64.exe",
+    "bytes": 115177613,
+    "peMachine": "I386 (NSIS launcher)",
+    "targetApplication": "Windows x64",
+    "sha256": "a510e0f70ef8ccec03f6ee54f7a7f451ee3ebb4be7b7b0e7432d0c779f4bc05f"
+  },
+  "installerSourceSha256": {
+    "scripts/upgrade-uninstall.ps1": "2a63a991f25e12aa3d5e5e4ac7e8f8d7d0ee5c5e4bb5424f2a08385874cce4b5",
+    "scripts/stop-installed-app.ps1": "2a4bbf00ce9e257836da625373df23d46ae4709fa6800f83fdf45358127e5bce",
+    "scripts/installer.nsh": "2c8457b443732faf7249dfb5943352fd81b2ccc64e44b0bd3688ca279b68b098",
+    "scripts/prepare-nsis.cjs": "a12541184154316fb4b1f105be329a07252c0086f485a9f6261e5e40eb23897b"
+  },
+  "limitations": "Windows 11 tray, native CIM, real install/upgrade/uninstall and long-run memory still require on-device validation. No code-signing certificate configured."
+}

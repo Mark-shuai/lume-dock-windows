@@ -1,0 +1,15 @@
+{
+  "date": "2026-10-20T07:12:31.388Z",
+  "version": "0.12.12",
+  "platform": "darwin",
+  "arch": "arm64",
+  "apps": 1000,
+  "searches": 80,
+  "searchMs": 218,
+  "searchMerges": 0,
+  "preferenceLibrarySerializations": 0,
+  "mountedAfterClose": 0,
+  "pinned": true,
+  "unpinned": true,
+  "limitations": "Synthetic macOS/Electron workload; elapsed time is host-dependent, not a Windows working-set measurement."
+}

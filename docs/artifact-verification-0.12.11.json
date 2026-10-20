@@ -1,0 +1,26 @@
+{
+  "version": "0.12.11",
+  "date": "2026-10-18T13:29:59.712Z",
+  "host": "darwin arm64",
+  "unitTests": {
+    "passed": 84,
+    "total": 84
+  },
+  "electronUI": [
+    "auto-hide (native visibility, simulated screen-point trajectories)",
+    "settings",
+    "categories",
+    "quit (app and IPC)"
+  ],
+  "packagedFilesVerified": 49,
+  "packagedVersion": "0.12.11",
+  "applicationPeMachine": "0x8664",
+  "installer": {
+    "file": "dist/Lume-Dock-Setup-0.12.11-x64.exe",
+    "bytes": 115184264,
+    "peMachine": "0x14c",
+    "targetApplication": "Windows x64",
+    "sha256": "890faa34bf3e35c01ed11bf063cafaa93bdb8d48836aab519a0ff49302207e9f"
+  },
+  "limitations": "Real Windows pointer motion, taskbar animations, compositor, installation and upgrade still require Windows 11 validation. No code-signing certificate configured."
+}
