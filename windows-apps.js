@@ -58,8 +58,6 @@ function createAppCatalog({ platform = process.platform, env = process.env, io =
       const key = `app:${item.appId.toLowerCase()}`;
       records.set(key, {
         id: `app:${item.appId}`, name: item.name, target: `apps-folder:${item.appId}`,
-        icon: typeof item.icon === 'string' && /^data:image\/png;base64,[a-z\d+/=]+$/i.test(item.icon) ? item.icon : null,
-        iconVersion: 2,
         source: item.appId.includes('!') ? 'Windows 应用' : '已安装应用',
       });
     }

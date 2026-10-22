@@ -21,6 +21,7 @@ let desktopIntegration;
 let importError = '';
 let trayController;
 let iconService;
+let appIconReader;
 let processService;
 let fullscreenMonitor;
 let layout = { iconSize: 64, dockWidth: 56 };
@@ -309,6 +310,7 @@ app.on('before-quit', (event) => {
   trayController?.destroy();
   trayController = null;
   fullscreenMonitor?.dispose();
+  appIconReader?.dispose();
   processService?.clear();
   // Destroy both renderers before waiting; their close callbacks must not restart work.
   settingsWin?.destroy();
@@ -450,14 +452,13 @@ ipcMain.handle('pick-custom-icon', async (event) => {
 });
 
 ipcMain.handle('get-icon', async (_event, target) => {
-  if (process.platform !== 'win32') return null;
+  if (quitting || process.platform !== 'win32') return null;
   iconService ??= require('./icon-service').createIconService({
     load: require('./windows-icons').createWindowsIconLoader({
       readIcon: async file => {
         if (file.startsWith('apps-folder:')) {
-          appCatalog ??= require('./windows-apps').createAppCatalog();
-          const result = await appCatalog.list();
-          return result.items.find(item => item.target === file)?.icon || null;
+          appIconReader ??= require('./app-icon-reader').createAppIconReader();
+          return appIconReader.get(file);
         }
         const icon = await app.getFileIcon(file, { size: 'large' });
         return icon.isEmpty() ? null : icon.toDataURL();

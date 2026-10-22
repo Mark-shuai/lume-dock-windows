@@ -1,10 +1,10 @@
-# Windows 11 开发交接：0.12.13
+# Windows 11 开发交接：0.12.14
 
 当前源码已经补齐用户提供的 0.12.0 README 中缺失的功能。后续以本项目为开发起点，不需要旧版源码。历史 README 保存在 windows-readme-0.12.0-reference.md，仅供对照；实际行为以根 README 和当前代码为准。
 
 ## 搬到 Windows
 
-1. 解压 Lume-Dock-0.12.13-Windows开发包.zip。里面包含完整源码，以及 dist/Lume-Dock-Setup-0.12.13-x64.exe。
+1. 解压 Lume-Dock-0.12.14-Windows开发包.zip。里面包含完整源码，以及 dist/Lume-Dock-Setup-0.12.14-x64.exe。
 2. 退出已经运行的 Lume Dock，再运行新安装包。每次只运行一个实例。旧版源码不参与安装或开发。
 3. 如需继续开发，安装 Node.js 20 或更高版本，在解压的 Windows程序坞目录运行 npm ci，再运行 npm start。依赖没有放进压缩包，首次安装需联网。
 4. 修改完成后运行 npm test 和对应 Electron 测试，再运行 npm run dist，生成新的 Windows x64 安装包。
@@ -17,6 +17,7 @@
 
 ## 新增实现与修复
 
+- 0.12.14：清单只读名称与入口；app-icon-reader.js / scripts/resolve-app-icons.ps1 按需读取AppsFolder图标并复用短时进程，空闲2秒退出；保留已验证的透明通道转换。新增 Windows实机检查.cmd / npm run verify:windows，使用独立配置执行原生回归、100轮交互及60分钟进程组采样。见 [Windows 实机步骤](windows-validation-0.12.14.md) 和 [本版说明](verification-0.12.14.md)。
 - 0.12.13：新增 renderer/app-search.js，提供首字母、驼峰词、紧凑字母与全角名称搜索；完整名称优先，保留别名、分类和筛选。修复图标已缓存但重绘节点仍显示默认图标的时序问题。无新增依赖或轮询。见 [GitHub 参考评估](github-reference-review-0.12.13.md) 和 [验证记录](verification-0.12.13.md)。
 - 0.12.12：renderer/launcher.js 按数据变化复用搜索索引，关闭释放临时数据；app.js 简化事件委托、ID查找和偏好保存；custom-icons.js 减少重复序列化；dock-motion.js 复用布局与帧计算数组，隐藏取消动画，显示重测布局。新增 npm run test:performance 和动画回归。对比结果见 [资源优化](verification-0.12.12.md)。
 
@@ -49,9 +50,9 @@
 
 ## Windows 实机验收
 
-本机为 macOS，已完成的模拟测试与交叉构建见 verification-0.12.13.md；它们不等于 Windows 安装或原生接口验证。建议按以下顺序在 Windows 11 执行：
+本机为 macOS，已完成的模拟测试与交叉构建见 verification-0.12.14.md；它们不等于 Windows 安装或原生接口验证。建议按以下顺序在 Windows 11 执行：
 
-1. npm run test:performance、npm run test:stability、npm run test:quit、npm run test:upgrade、npm test、npm run test:custom-icons、npm run test:dedup、npm run test:library、npm run test:settings、npm run test:windows-icons、npm run test:features、npm run test:regressions 和其余 README 测试。windows-icons 会创建临时 fixture，结束后清理。
+1. 先运行根目录 Windows实机检查.cmd（默认60分钟）或 npm run verify:windows -- --quick，报告见 reports 文件夹；再按需单独运行 npm run test:performance、npm run test:stability、npm run test:quit、npm run test:upgrade、npm test、npm run test:custom-icons、npm run test:dedup、npm run test:library、npm run test:settings、npm run test:windows-icons、npm run test:features、npm run test:regressions 和其余 README 测试。windows-icons 会创建临时 fixture，结束后清理。
 2. 安装后打开全部应用并刷新，同一程序的桌面/开始菜单入口应合并，别名能搜索；试用 vsc、wt、gchr 和全角输入，确认完整名称优先；检查取消固定/再次固定及最近筛选。不同参数和32/64位版本、说明文档与官网入口应保留。再检查托盘、退出、登录启动、全局快捷键、应用启动和个人/公共/OneDrive 桌面扫描。
 3. 对 exe / lnk / url、中文/空格/& 路径、自定义 ico、DLL 非零/负索引和失效入口检查图标。打开入口仍执行原始快捷方式。
 4. 打开/退出普通 exe 应用，等待最多一个刷新周期检查圆点；关闭标记后消失，UWP/URL 不显示；启动台展开时暂停，独立设置打开时继续显示。

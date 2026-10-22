@@ -1,0 +1,34 @@
+{
+  "version": "0.12.14",
+  "date": "2026-10-22T09:53:51.637Z",
+  "host": "darwin arm64",
+  "unitTests": {
+    "passed": 93,
+    "total": 94,
+    "skipped": 1,
+    "skipReason": "Portable PowerShell unavailable on current host; production C# converter byte-identical to 0.12.13, not recompiled here."
+  },
+  "electronUI": [
+    "performance",
+    "stability (1000 apps, 40 cycles)",
+    "launcher",
+    "categories",
+    "dedup",
+    "custom-icons",
+    "material",
+    "quit (app and IPC)",
+    "Windows validation runner synthetic smoke",
+    "synthetic lazy-icon soak (1000 apps, 100 cycles)"
+  ],
+  "packagedFilesVerified": 52,
+  "packagedVersion": "0.12.14",
+  "applicationPeMachine": "0x8664",
+  "installer": {
+    "file": "dist/Lume-Dock-Setup-0.12.14-x64.exe",
+    "bytes": 115187026,
+    "peMachine": "0x14c",
+    "targetApplication": "Windows x64",
+    "sha256": "83c9026b7da73db1af8a3ef7df131d10c484e484c84ae2ba2a2aa222dd2f2fb3"
+  },
+  "limitations": "macOS synthetic verification and Windows cross-build. Windows native lazy icon reader, actual 60-minute soak, installer/upgrade and sleep/resume remain unverified. No signing certificate configured."
+}

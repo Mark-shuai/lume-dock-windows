@@ -5,6 +5,8 @@ const path = require('node:path');
 const { execFile } = require('node:child_process');
 const assert = require('node:assert/strict');
 const { createWindowsIconLoader } = require('../windows-icons');
+const { createAppIconReader } = require('../app-icon-reader');
+const { createAppCatalog } = require('../windows-apps');
 const { createIdentityResolver } = require('../app-identities');
 async function powershell(source, data) {
   return new Promise((resolve, reject) => {
@@ -17,6 +19,7 @@ async function powershell(source, data) {
 app.whenReady().then(async () => {
   if (process.platform !== 'win32') { console.log('SKIPPED: Windows native icon check requires Windows.'); app.exit(0); return; }
   let directory;
+  const appIcons = createAppIconReader();
   try {
     directory = await fs.mkdtemp(path.join(os.tmpdir(), 'Lume 中文 & icons-'));
     // A classic 24-bit icon relies on its AND mask, not RGB color-key removal.
@@ -76,11 +79,23 @@ app.whenReady().then(async () => {
     assert.equal(identities.length,3);
     assert.equal(identities[0].identity[0],identities[1].identity[0],'Same executable shortcuts share program identity');
     assert.notEqual(identities[0].identity[0],identities[2].identity[0],'Different launch arguments remain distinct');
+    const catalog = await createAppCatalog().list();
+    assert.ok(!catalog.error, catalog.error);
+    assert.ok(catalog.items.every(item => !Object.hasOwn(item, 'icon')), 'discovery only returns metadata');
+    const registered = catalog.items.filter(item => item.target.startsWith('apps-folder:')).slice(0, 8);
+    assert.ok(registered.length, 'Windows registered applications are available for native icon checks');
+    const nativeArtwork = await Promise.all(registered.map(item => appIcons.get(item.target)));
+    assert.ok(nativeArtwork.some(icon => /^data:image\/png;base64,/.test(icon || '')), 'on-demand AppsFolder reader returns real native artwork');
+    assert.equal(await appIcons.get('apps-folder:Lume.Nonexistent.NativeFixture.000000'), null, 'missing app falls back without failing the batch');
+    for (const icon of nativeArtwork.filter(Boolean)) assert.ok(!nativeImage.createFromDataURL(icon).isEmpty());
+    appIcons.dispose();
+    console.log('Windows native AppsFolder icons passed: metadata-only discovery, lazy batch artwork and missing-app fallback.');
     console.log('Windows native icons passed: Chinese/space/& path, real shortcut target, nonzero DLL resource, UTF-16 URL shortcut, three-path batch, native HBITMAP alpha/PNG and legacy ICO AND mask.');
     console.log('Windows native identities passed: real shortcut resolution, equivalent aliases and distinct arguments.');
     await fs.rm(directory,{recursive:true,force:true});
     app.exit(0);
   } catch(error) {
+    appIcons.dispose();
     console.error(error);
     if(directory) await fs.rm(directory,{recursive:true,force:true}).catch(() => {});
     app.exit(1);

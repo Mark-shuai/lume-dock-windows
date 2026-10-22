@@ -1,6 +1,6 @@
 param([switch] $Native)
 $ErrorActionPreference = 'Stop'
-$script = [IO.File]::ReadAllText((Join-Path $PSScriptRoot '../scripts/list-apps.ps1'))
+$script = [IO.File]::ReadAllText((Join-Path $PSScriptRoot '../scripts/resolve-app-icons.ps1'))
 $source = [regex]::Match($script, '(?s)\$iconSource = @''\r?\n(.*?)\r?\n''@').Groups[1].Value
 if (-not $source) { throw 'Missing production icon converter' }
 $fixture = @'

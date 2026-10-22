@@ -5,3 +5,4 @@ scripts/generated-installer.nsi
 docs/*.log
 
 .DS_Store
+reports/

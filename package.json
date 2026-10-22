@@ -1,6 +1,6 @@
 {
   "name": "lume-dock",
-  "version": "0.12.13",
+  "version": "0.12.14",
   "description": "A calm, compact dock for Windows shortcuts.",
   "main": "main.js",
   "scripts": {
@@ -25,7 +25,8 @@
     "test:custom-icons": "electron tests/custom-icons-ui.cjs",
     "test:categories": "electron tests/categories-ui.cjs",
     "test:auto-hide": "electron tests/auto-hide-ui.cjs",
-    "test:performance": "electron tests/performance-ui.cjs"
+    "test:performance": "electron tests/performance-ui.cjs",
+    "verify:windows": "node scripts/verify-windows.cjs"
   },
   "keywords": [
     "windows",
@@ -48,11 +49,13 @@
       "helper-processes.js",
       "icon-service.js",
       "windows-icons.js",
+      "app-icon-reader.js",
       "preload.js",
       "windows-apps.js",
       "app-identities.js",
       "scripts/app-identities.ps1",
       "scripts/list-apps.ps1",
+      "scripts/resolve-app-icons.ps1",
       "scripts/resolve-icons.ps1",
       "renderer/**/*",
       "windows-integration.js",

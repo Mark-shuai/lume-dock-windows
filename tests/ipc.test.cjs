@@ -9,7 +9,7 @@ function entry(name, directory = false) {
   return { name, isFile: () => !directory, isSymbolicLink: () => false };
 }
 
-function harness({ spawnError = false, readDesktop, selection, pickerError, confirmation = true, argv = [], ownsInstance = true, importService, catalogService, identityService } = {}) {
+function harness({ spawnError = false, readDesktop, selection, pickerError, confirmation = true, argv = [], ownsInstance = true, importService, catalogService, identityService, appIconReader } = {}) {
   const handlers = {};
   const calls = [];
   const events = {};
@@ -71,6 +71,7 @@ function harness({ spawnError = false, readDesktop, selection, pickerError, conf
       if (name === './auto-hide') return require('../auto-hide');
       if (name === './helper-processes') return {track:child=>child,stop:()=>{calls.push(['helpers-stop']);return Promise.resolve([]);}};
       if (name === './windows-apps' && catalogService) return { createAppCatalog: () => catalogService };
+      if (name === './app-icon-reader' && appIconReader) return { createAppIconReader: () => appIconReader };
       if (name === './app-identities' && identityService) return { createIdentityResolver: () => identityService };
       if (name === path.resolve(__dirname, '../fullscreen-monitor')) return {
         createFullscreenPolicy: require('../fullscreen-monitor').createFullscreenPolicy,
@@ -319,14 +320,23 @@ test('programmatic fullscreen hide and explicit reveal publish native visibility
   assert.ok(h.calls.some(call => call[0] === 'send' && call[1] === 'dock:visibility' && call[2] === true));
 });
 
-test('stale pinned AppsFolder artwork reloads from the cached Windows catalog', async () => {
+test('AppsFolder artwork loads on demand, shares bounded cache and never scans the catalog', async () => {
   const artwork = 'data:image/png;base64,AAAA';
-  let reads = 0;
-  const h = harness({ catalogService: { list:async()=>{reads++;return {items:[{target:'apps-folder:Vendor.App',icon:artwork}]};} } });
+  let reads = 0, disposed = 0;
+  const h = harness({
+    catalogService: { list: async () => { throw new Error('icon loading must not scan the catalog'); } },
+    appIconReader: { get: async target => { reads++; return target === 'apps-folder:Vendor.App' ? artwork : null; }, dispose: () => disposed++ },
+  });
   assert.equal(await h.invoke('get-icon','apps-folder:Vendor.App'), artwork);
   assert.equal(await h.invoke('get-icon','apps-folder:Vendor.App'), artwork);
-  assert.equal(reads,1,'shared icon service caches the recovered icon');
+  assert.equal(reads, 1, 'shared icon service caches the recovered icon');
   assert.equal(await h.invoke('get-icon','apps-folder:Vendor.Missing'), null);
+  assert.equal(reads, 2);
+  h.events['before-quit']({ preventDefault() {} });
+  await new Promise(resolve => setImmediate(resolve));
+  assert.equal(disposed, 1);
+  assert.equal(await h.invoke('get-icon', 'apps-folder:After.Quit'), null);
+  assert.equal(reads, 2, 'quit cannot restart the reader');
 });
 
 

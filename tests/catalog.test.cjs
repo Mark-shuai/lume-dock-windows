@@ -34,14 +34,14 @@ test('collects nested Start menu shortcuts and registered apps without hiding sa
   assert.match(result.items.find((app) => app.name === 'Editor').target, /Tools\\Editor.lnk$/);
   const calculator = result.items.find((app) => app.name === '计算器');
   assert.equal(calculator.target, 'apps-folder:Microsoft.WindowsCalculator_123!App');
-  assert.equal(calculator.icon, 'data:image/png;base64,AAAA');
-  assert.equal(calculator.iconVersion, 2);
+  assert.equal(calculator.icon, undefined, 'catalog never retains native image data');
+  assert.equal(calculator.iconVersion, undefined);
   assert.equal(calls[0][0], 'C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\powershell.exe');
   assert.equal(calls[0][2].windowsHide, true);
   assert.equal(calls[0][2].timeout, 45000);
   const script = Buffer.from(calls[0][1].at(-1), 'base64').toString('utf16le');
   assert.match(script, /Get-StartApps/);
-  assert.match(script, /SHCreateItemFromParsingName/);
+  assert.doesNotMatch(script, /SHCreateItemFromParsingName|Add-Type|LumeShellIcon|System.Drawing/, 'discovery does not extract icons');
 });
 
 test('PowerShell failure preserves Start menu apps and malformed results do not crash', async () => {
@@ -89,4 +89,15 @@ test('unsupported hosts do not invoke Windows discovery', async () => {
   const result = await createAppCatalog({ ...options, platform: 'darwin' }).list();
   assert.ok(result.error);
   assert.equal(calls.length, 0);
+});
+
+
+test('large metadata catalogs do not retain legacy inline artwork', async () => {
+  const records = Array.from({ length: 1000 }, (_, i) => ({ name: 'App ' + i, appId: 'Vendor.App.' + i,
+    icon: 'data:image/png;base64,' + 'A'.repeat(4096) }));
+  const { options } = fixture({ run: async () => ({ stdout: JSON.stringify(records) }), readdir: async () => [] });
+  const result = await createAppCatalog(options).list();
+  assert.equal(result.items.length, 1000);
+  assert.ok(result.items.every(item => !Object.hasOwn(item, 'icon')));
+  assert.ok(JSON.stringify(result).length < 200000, 'catalog size depends on metadata, not PNG strings');
 });

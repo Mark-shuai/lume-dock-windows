@@ -1,0 +1,304 @@
+{
+  "version": "0.12.14",
+  "startedAt": "2026-10-22T09:52:06.782Z",
+  "platform": "darwin",
+  "arch": "arm64",
+  "electron": "44.8.0",
+  "mode": "synthetic-smoke",
+  "options": {
+    "minutes": 0,
+    "cycles": 100,
+    "intervalSeconds": 30,
+    "smoke": true
+  },
+  "status": "passed",
+  "units": {
+    "electronWorkingSetSize": "KiB",
+    "rendererHeap": "bytes",
+    "nativeWorkingSetAndPrivate": "bytes",
+    "nativeCpuTotal": "ms"
+  },
+  "samples": [
+    {
+      "at": "2026-10-22T09:52:07.216Z",
+      "phase": "startup",
+      "processes": [
+        {
+          "pid": 47738,
+          "type": "Browser",
+          "cpu": {
+            "cumulativeCPUUsage": 0.293951,
+            "percentCPUUsage": 0,
+            "idleWakeupsPerSecond": 0
+          },
+          "memory": {
+            "workingSetSize": 163088,
+            "peakWorkingSetSize": 163088
+          }
+        },
+        {
+          "pid": 47740,
+          "type": "GPU",
+          "cpu": {
+            "cumulativeCPUUsage": 0.167515,
+            "percentCPUUsage": 0,
+            "idleWakeupsPerSecond": 0
+          },
+          "memory": {
+            "workingSetSize": 106976,
+            "peakWorkingSetSize": 106976
+          }
+        },
+        {
+          "pid": 47741,
+          "type": "Utility",
+          "cpu": {
+            "cumulativeCPUUsage": 0.052932,
+            "percentCPUUsage": 0,
+            "idleWakeupsPerSecond": 0
+          },
+          "memory": {
+            "workingSetSize": 48160,
+            "peakWorkingSetSize": 48160
+          }
+        },
+        {
+          "pid": 47743,
+          "type": "Tab",
+          "cpu": {
+            "cumulativeCPUUsage": 0.122126,
+            "percentCPUUsage": 0,
+            "idleWakeupsPerSecond": 0
+          },
+          "memory": {
+            "workingSetSize": 130928,
+            "peakWorkingSetSize": 130928
+          }
+        }
+      ],
+      "rendererHeap": {
+        "backingStorageSize": 231223,
+        "embedderHeapUsedSize": 3990168,
+        "totalSize": 4194304,
+        "usedSize": 1708616
+      },
+      "nativeProcessTree": null,
+      "activeAppIconWorkers": 0
+    },
+    {
+      "at": "2026-10-22T09:52:07.495Z",
+      "phase": "launcher-open",
+      "processes": [
+        {
+          "pid": 47738,
+          "type": "Browser",
+          "cpu": {
+            "cumulativeCPUUsage": 0.330887,
+            "percentCPUUsage": 1.2783188321531658,
+            "idleWakeupsPerSecond": 28
+          },
+          "memory": {
+            "workingSetSize": 174320,
+            "peakWorkingSetSize": 174352
+          }
+        },
+        {
+          "pid": 47740,
+          "type": "GPU",
+          "cpu": {
+            "cumulativeCPUUsage": 0.2324,
+            "percentCPUUsage": 2.245590841131846,
+            "idleWakeupsPerSecond": 187
+          },
+          "memory": {
+            "workingSetSize": 117088,
+            "peakWorkingSetSize": 119744
+          }
+        },
+        {
+          "pid": 47741,
+          "type": "Utility",
+          "cpu": {
+            "cumulativeCPUUsage": 0.052932,
+            "percentCPUUsage": 0,
+            "idleWakeupsPerSecond": 0
+          },
+          "memory": {
+            "workingSetSize": 48128,
+            "peakWorkingSetSize": 48160
+          }
+        },
+        {
+          "pid": 47743,
+          "type": "Tab",
+          "cpu": {
+            "cumulativeCPUUsage": 0.163195,
+            "percentCPUUsage": 1.4213775965778126,
+            "idleWakeupsPerSecond": 24
+          },
+          "memory": {
+            "workingSetSize": 156560,
+            "peakWorkingSetSize": 156608
+          }
+        }
+      ],
+      "rendererHeap": {
+        "backingStorageSize": 276698,
+        "embedderHeapUsedSize": 8169816,
+        "totalSize": 9437184,
+        "usedSize": 4668044
+      },
+      "nativeProcessTree": null,
+      "activeAppIconWorkers": 1
+    },
+    {
+      "at": "2026-10-22T09:52:12.881Z",
+      "phase": "after-cycles-idle",
+      "processes": [
+        {
+          "pid": 47738,
+          "type": "Browser",
+          "cpu": {
+            "cumulativeCPUUsage": 0.857153,
+            "percentCPUUsage": 0.9773014819804086,
+            "idleWakeupsPerSecond": 43
+          },
+          "memory": {
+            "workingSetSize": 184832,
+            "peakWorkingSetSize": 184912
+          }
+        },
+        {
+          "pid": 47740,
+          "type": "GPU",
+          "cpu": {
+            "cumulativeCPUUsage": 1.197301,
+            "percentCPUUsage": 1.7917907508484952,
+            "idleWakeupsPerSecond": 139
+          },
+          "memory": {
+            "workingSetSize": 122800,
+            "peakWorkingSetSize": 128192
+          }
+        },
+        {
+          "pid": 47741,
+          "type": "Utility",
+          "cpu": {
+            "cumulativeCPUUsage": 0.054011,
+            "percentCPUUsage": 0.0020036381165875984,
+            "idleWakeupsPerSecond": 1
+          },
+          "memory": {
+            "workingSetSize": 48448,
+            "peakWorkingSetSize": 48496
+          }
+        },
+        {
+          "pid": 47743,
+          "type": "Tab",
+          "cpu": {
+            "cumulativeCPUUsage": 2.487188,
+            "percentCPUUsage": 4.3154679725019935,
+            "idleWakeupsPerSecond": 55
+          },
+          "memory": {
+            "workingSetSize": 342896,
+            "peakWorkingSetSize": 343392
+          }
+        }
+      ],
+      "rendererHeap": {
+        "backingStorageSize": 234831,
+        "embedderHeapUsedSize": 30553584,
+        "totalSize": 62341120,
+        "usedSize": 36153544
+      },
+      "nativeProcessTree": null,
+      "activeAppIconWorkers": 0
+    },
+    {
+      "at": "2026-10-22T09:52:15.416Z",
+      "phase": "final-idle",
+      "processes": [
+        {
+          "pid": 47738,
+          "type": "Browser",
+          "cpu": {
+            "cumulativeCPUUsage": 0.8785,
+            "percentCPUUsage": 0.08420003849685556,
+            "idleWakeupsPerSecond": 5
+          },
+          "memory": {
+            "workingSetSize": 184864,
+            "peakWorkingSetSize": 184960
+          }
+        },
+        {
+          "pid": 47740,
+          "type": "GPU",
+          "cpu": {
+            "cumulativeCPUUsage": 1.26216,
+            "percentCPUUsage": 0.25582830918388877,
+            "idleWakeupsPerSecond": 29
+          },
+          "memory": {
+            "workingSetSize": 122864,
+            "peakWorkingSetSize": 128256
+          }
+        },
+        {
+          "pid": 47741,
+          "type": "Utility",
+          "cpu": {
+            "cumulativeCPUUsage": 0.054011,
+            "percentCPUUsage": 0,
+            "idleWakeupsPerSecond": 0
+          },
+          "memory": {
+            "workingSetSize": 48448,
+            "peakWorkingSetSize": 48496
+          }
+        },
+        {
+          "pid": 47743,
+          "type": "Tab",
+          "cpu": {
+            "cumulativeCPUUsage": 2.539659,
+            "percentCPUUsage": 0.20696521102199897,
+            "idleWakeupsPerSecond": 10
+          },
+          "memory": {
+            "workingSetSize": 342928,
+            "peakWorkingSetSize": 343392
+          }
+        }
+      ],
+      "rendererHeap": {
+        "backingStorageSize": 234862,
+        "embedderHeapUsedSize": 34707784,
+        "totalSize": 62341120,
+        "usedSize": 41402784
+      },
+      "nativeProcessTree": null,
+      "activeAppIconWorkers": 0
+    }
+  ],
+  "events": [],
+  "activity": {
+    "catalogCalls": 102,
+    "appIconRequests": 47,
+    "appIconWorkerStarts": 1
+  },
+  "limitations": "Development Electron with isolated settings. Smoke uses synthetic catalogs and a Node icon helper. Native mode uses real Windows discovery/icons. Working sets include shared pages; do not sum them as exclusive memory. Passing is not a guarantee against long-term leaks or installer issues.",
+  "catalogEntries": 1000,
+  "firstOpenMs": 26,
+  "firstOpen": {
+    "cells": 90,
+    "loadedImages": 47,
+    "appIconRequests": 47
+  },
+  "completedCycles": 100,
+  "finishedAt": "2026-10-22T09:52:15.419Z",
+  "rendererErrors": []
+}
